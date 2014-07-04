@@ -1,0 +1,56 @@
+﻿<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Style x:Key="GelRadioButton" TargetType="{x:Type RadioButton}">
+		<Setter Property="Background" Value="Black" />
+		<Setter Property="Foreground" Value="White" />
+		<Setter Property="Margin" Value="3" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RadioButton}">
+					<Grid>
+						<Rectangle Name="GelBackground" RadiusX="9" RadiusY="9"
+											 Fill="{TemplateBinding Background}"  >
+						</Rectangle>
+						<ContentPresenter Name="GelButtonContent"
+															VerticalAlignment="Center" 
+															HorizontalAlignment="Center"
+															Content="{TemplateBinding Content}" />
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Rectangle.Fill"
+											TargetName="GelBackground"
+											Value="{StaticResource MouseOverBrush}" />
+							<Setter Property="Foreground" Value="Black" />
+						</Trigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter Property="Rectangle.Fill"
+											TargetName="GelBackground"
+											Value="{StaticResource CheckedBrush}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<SolidColorBrush x:Key="Test" Color="BlanchedAlmond"></SolidColorBrush>
+	<LinearGradientBrush x:Key="zLinearShine" 
+											 StartPoint="0,0" EndPoint="0,1">
+		<GradientStop Offset="0" Color="Pink" /> <!--#ccffffff-->
+		<GradientStop Offset="1" Color="Transparent" />
+	</LinearGradientBrush>
+
+	<RadialGradientBrush x:Key="MouseOverBrush">
+		<GradientStop Offset="0" Color="Yellow" />
+		<GradientStop Offset="1" Color="DarkRed" />
+	</RadialGradientBrush>
+
+	<RadialGradientBrush x:Key="CheckedBrush">
+		<GradientStop Offset="0" Color="#ffcc00" />
+		<GradientStop Offset="1" Color="#cc9900" />
+	</RadialGradientBrush>
+
+</ResourceDictionary>

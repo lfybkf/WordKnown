@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrnViewer", "TrnViewer\TrnViewer.csproj", "{18C1768B-BA94-406F-BFD3-1ACDABFDE65B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parer", "Parer\Parer.csproj", "{61E99A44-6B03-4801-A675-509BF581B01C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ugadai", "Ugadai\Ugadai.csproj", "{8C7A2CF8-6571-4029-9463-2A67C5AC05C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordKnown", "WordKnown\WordKnown.csproj", "{E5DB35E4-0E2A-452F-9B69-7DACA165EF03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18C1768B-BA94-406F-BFD3-1ACDABFDE65B}.Debug|x86.ActiveCfg = Debug|x86
+		{18C1768B-BA94-406F-BFD3-1ACDABFDE65B}.Debug|x86.Build.0 = Debug|x86
+		{18C1768B-BA94-406F-BFD3-1ACDABFDE65B}.Release|x86.ActiveCfg = Release|x86
+		{18C1768B-BA94-406F-BFD3-1ACDABFDE65B}.Release|x86.Build.0 = Release|x86
+		{61E99A44-6B03-4801-A675-509BF581B01C}.Debug|x86.ActiveCfg = Debug|x86
+		{61E99A44-6B03-4801-A675-509BF581B01C}.Debug|x86.Build.0 = Debug|x86
+		{61E99A44-6B03-4801-A675-509BF581B01C}.Release|x86.ActiveCfg = Release|x86
+		{61E99A44-6B03-4801-A675-509BF581B01C}.Release|x86.Build.0 = Release|x86
+		{8C7A2CF8-6571-4029-9463-2A67C5AC05C3}.Debug|x86.ActiveCfg = Debug|x86
+		{8C7A2CF8-6571-4029-9463-2A67C5AC05C3}.Debug|x86.Build.0 = Debug|x86
+		{8C7A2CF8-6571-4029-9463-2A67C5AC05C3}.Release|x86.ActiveCfg = Release|x86
+		{8C7A2CF8-6571-4029-9463-2A67C5AC05C3}.Release|x86.Build.0 = Release|x86
+		{E5DB35E4-0E2A-452F-9B69-7DACA165EF03}.Debug|x86.ActiveCfg = Debug|x86
+		{E5DB35E4-0E2A-452F-9B69-7DACA165EF03}.Debug|x86.Build.0 = Debug|x86
+		{E5DB35E4-0E2A-452F-9B69-7DACA165EF03}.Release|x86.ActiveCfg = Release|x86
+		{E5DB35E4-0E2A-452F-9B69-7DACA165EF03}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

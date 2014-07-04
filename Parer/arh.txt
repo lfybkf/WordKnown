@@ -1,0 +1,24 @@
+						<Rectangle Name="GelShine" Margin="2,2,2,0"
+											 VerticalAlignment="Top" 
+											 RadiusX="6" RadiusY="6" Opacity="1"
+											 Height="15"
+											 Fill="AliceBlue">
+						</Rectangle>
+
+
+
+							<Rectangle.Fill>
+								<LinearGradientBrush  
+											 StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Offset="0" Color="Pink" />
+									<GradientStop Offset="1" Color="Transparent" />
+								</LinearGradientBrush>
+
+							</Rectangle.Fill>
+
+
+						<Rectangle Name="GelBackground" RadiusX="9" RadiusY="9"
+											 Fill="{TemplateBinding Background}"  >
+						</Rectangle>
+
+BasedOn="{StaticResource GelRadioButton}"

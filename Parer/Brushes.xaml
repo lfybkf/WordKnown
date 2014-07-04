@@ -1,0 +1,31 @@
+﻿<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	
+	<LinearGradientBrush x:Key="LinearShine" 
+											 StartPoint="0,0" EndPoint="0,1">
+		<GradientStop Offset="0" Color="White" />
+		<GradientStop Offset="1" Color="Transparent" />
+	</LinearGradientBrush>
+
+	<RadialGradientBrush x:Key="MouseOverBrush">
+		<GradientStop Offset="0" Color="LightGreen" />
+		<GradientStop Offset="0.5" Color="Black" />
+	</RadialGradientBrush>
+
+	<RadialGradientBrush x:Key="CheckedBrush">
+		<GradientStop Offset="0" Color="LightGreen" />
+		<GradientStop Offset="1" Color="DarkGreen" />
+	</RadialGradientBrush>
+
+	<RadialGradientBrush x:Key="MouseOverBrush2">
+		<GradientStop Offset="0" Color="LightGreen" />
+		<GradientStop Offset="1" Color="DarkGreen" />
+	</RadialGradientBrush>
+
+	<RadialGradientBrush x:Key="CheckedBrush2">
+		<GradientStop Offset="0" Color="#ffcc00" />
+		<GradientStop Offset="1" Color="#cc9900" />
+	</RadialGradientBrush>
+
+</ResourceDictionary>

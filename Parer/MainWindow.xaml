@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="Parer.MainWindow" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="MainWindow"
+	WindowState="Maximized"
+	Loaded="Window_Loaded">
+	<Window.Resources>
+		<Style
+			TargetType="RadioButton"
+			BasedOn="{StaticResource GelRadioButton}">
+			<Setter
+				Property="FontSize"
+				Value="36" />
+		</Style>
+		<Style
+			TargetType="TextBlock">
+			<Setter Property="FontSize" Value="24" />
+			<Setter Property="Background" Value="Blue" />
+		</Style>
+	</Window.Resources>
+	<StackPanel>
+		<StackPanel
+			Orientation="Horizontal">
+			<StackPanel
+				Name="panEng"
+				Width="400"
+				Background="AliceBlue">
+				<RadioButton
+					IsChecked="False">First</RadioButton>
+				<RadioButton
+					IsChecked="False">Second</RadioButton>
+				<RadioButton
+					IsChecked="False">Third</RadioButton>
+			</StackPanel>
+			<StackPanel
+				Name="panRus"
+				Background="Aquamarine">
+				<RadioButton
+					IsChecked="False">Первый</RadioButton>
+				<RadioButton
+					IsChecked="False">Второй</RadioButton>
+				<RadioButton
+					IsChecked="False">Третий</RadioButton>
+			</StackPanel>
+		</StackPanel>
+		<StackPanel
+			Name="panDst"
+			MouseUp="panDst_MouseUp"
+			Background="CadetBlue"></StackPanel>
+	</StackPanel>
+</Window>
