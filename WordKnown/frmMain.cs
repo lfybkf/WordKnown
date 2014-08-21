@@ -29,11 +29,11 @@ namespace WordKnown
 
 		public void InitializeKommands()
 		{
-			kmds.Add(new Kommand(Name: "Copy", Caption: "Копировать", Exec: kmdCopy, Scut: Keys.Control | Keys.Insert));
-			kmds.Add(new Kommand(Name: "Paste", Caption: "Вставить", Exec: kmdPaste, Scut: Keys.Shift | Keys.Insert));
-			kmds.Add(new Kommand(Name: "Known", Caption: "Убрать известные", Exec: kmdKnown, Scut: Keys.Control | Keys.Z));
-			kmds.Add(new Kommand(Name: "Save", Caption: "Сохранить", Exec: kmdSave, Scut: Keys.Control | Keys.S));
-			kmds.Add(new Kommand(Name: "SelectCopy", Caption: "Выбрать и копировать", Exec: kmdSelectCopy, Scut: Keys.Control | Keys.Space));
+			kmds.Add(new Kommand(Name: "Copy", Caption: "Копировать", Exec: kmdCopy, keys:  Keys.Control | Keys.Insert));
+			kmds.Add(new Kommand("Paste", "Вставить", kmdPaste, Keys.Shift | Keys.Insert));
+			kmds.Add(new Kommand("Known", "Убрать известные", kmdKnown, Keys.Control | Keys.Z));
+			kmds.Add(new Kommand("Save", "Сохранить", kmdSave, Keys.Control | Keys.S));
+			kmds.Add(new Kommand("SelectCopy", "Выбрать и копировать", kmdSelectCopy, Keys.Control | Keys.Space));
 
 			foreach (var mi in menuStrip1.Items.OfType<ToolStripMenuItem>() )
 			{
@@ -44,10 +44,9 @@ namespace WordKnown
 		}//func
 
 
-		public void kmdCopy()
-		{
-			glos.Copy();
-		}//func
+		public void kmdCopy()		{			glos.Copy();		}//func
+		public void kmdPaste()		{			glos.Paste();		}//func
+		public void kmdSave()		{			glos.Save();		}//func
 
 		public void kmdSelectCopy()
 		{
@@ -71,16 +70,6 @@ namespace WordKnown
 
 			//копируем выделенное
 			glos.Copy();
-		}//func
-
-		public void kmdPaste()
-		{
-			glos.Paste();
-		}//func
-
-		public void kmdSave()
-		{
-			glos.Save();
 		}//func
 
 		public void kmdKnown()
@@ -151,12 +140,6 @@ namespace WordKnown
 				lst.Items.Remove(lst.SelectedItem);
 			}//if
 		}//func
-
-		private void zKmd_Click(object sender, EventArgs e)
-		{
-			Kommand kmd = Kommand.GetFromTag(sender);
-			Kommand.Execute(kmd);
-		}
 
 		private void mi_MouseHover(object sender, EventArgs e)
 		{
