@@ -11,14 +11,18 @@ namespace Trn2Txt
 	{
 		static void Main(string[] args)
 		{
-			if (args.Length != 3)
+			if (args.Length != 2)
 			{
 				Console.WriteLine("Usage: exe txt trn");
+				foreach (var item in args)
+				{
+					Console.WriteLine(item);
+				}//for
 				return;
 			}//if
 
-			string txtFile = args[1];
-			string trnFile = args[2];
+			string txtFile = args[0];
+			string trnFile = args[1];
 			Encoding encoding = Encoding.GetEncoding(1251);
 
 			string line;
@@ -41,8 +45,11 @@ namespace Trn2Txt
 				}//while
 			}//using
 
+			Console.WriteLine("Starting with TrnCount=" + Trn.Count);
+
 			string withTrn = " {0}({1})";
 			string[] ends = { " ", ".", "," };
+			int Count = 0;
 			foreach (var key in Trn.Keys)
 			{
 				foreach (var end in ends)
@@ -54,10 +61,16 @@ namespace Trn2Txt
 						sAll = sAll.Replace(sEng, sRus);
 					}//if
 				}//for
+				
+				Count++;
+				if (Count % 50 == 0)
+					Console.Write(" " + Count);
 			}//for
 
 			string FileName = Path.GetFileNameWithoutExtension(txtFile) + "_trn" + Path.GetExtension(txtFile);
 			File.WriteAllText(FileName , sAll, encoding);
+
+			Console.WriteLine("ALL DONE");
 		}//function
 	}//class
 }
