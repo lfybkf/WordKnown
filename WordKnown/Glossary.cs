@@ -117,7 +117,7 @@ namespace WordKnown
 			foreach (WordTranslate wt in lstUnk)
 			{
 				wtTrn = wtsTrn.FirstOrDefault(o => o.Word == wt.Word);
-				if (wtTrn != null) { wt.Translate = wtTrn.Translate; }
+				if (wtTrn != null) { wt.Translate = wtTrn.Translate; wt.Selected = true; }
 			}//for
 
 			Refresh();
@@ -208,12 +208,11 @@ namespace WordKnown
 		public void Refresh()
 		{
 			int i = ctl.SelectedIndex;
-			i = i < 0 ? 0 : i;
 
 			ctl.Items.Clear();
-			ctl.Items.AddRange(lstUnk.ToArray());
+			ctl.Items.AddRange(lstUnk.OrderBy(wt => wt.Selected).ThenBy(wt => wt.Word).ToArray());
 
-			if (i < lstUnk.Count)
+			if (i>= 0 && i < lstUnk.Count)
 				ctl.SelectedIndex = i;
 			else
 				ctl.SelectedIndex = 0;

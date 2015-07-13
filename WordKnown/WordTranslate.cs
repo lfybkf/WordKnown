@@ -12,8 +12,10 @@ namespace WordKnown
 		public static readonly Encoding encoding = Encoding.GetEncoding(1251);
 		static string fmt = "{0} - {1}";
 		static string[] dlm = new string[] {D};
+
 		public string Word { get; set; }
 		public string Translate { get; set; }
+		public bool Selected = false;
 
 		public WordTranslate()
 		{
