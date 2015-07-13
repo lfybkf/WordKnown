@@ -47,7 +47,7 @@ namespace Trn2Txt
 
 			Console.WriteLine("Starting with TrnCount=" + Trn.Count);
 
-			string withTrn = " {0}({1})";
+			string withTrn = " {0} ({1})";
 			string[] ends = { " ", ".", "," };
 			int Count = 0;
 			foreach (var key in Trn.Keys)

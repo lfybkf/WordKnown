@@ -9,24 +9,32 @@ namespace WordKnown
 	/// <summary>
 	/// Класс, содержащий упорядоченный набор строк
 	/// </summary>
-    class OrderedStrings
-    {
-        List<string> Content = new List<string>();
-        string Path;
-        int Position = 0;
+	class OrderedStrings
+	{
+		List<string> Content = new List<string>();
+		string path;
+		int Position = 0;
 
-        public OrderedStrings(string Path)
-        {
-            this.Path = Path;
-        }//func
+		public OrderedStrings(string path)  { this.path = path; }//func
+
+		public IEnumerable<string> sequenceAll
+		{	
+			get 
+			{
+				for (int i = 0; i < Content.Count; i++)
+				{
+					yield return  Content.ElementAt(i);
+				}//for
+			}//get
+		}//prop
 
         public void Load()
         {
-            Content.AddRange(
-				File.ReadAllLines(Path)
-				.OrderBy(s => s)
-                .Select(s => s.ToUpper())
-				.ToArray());
+					if (File.Exists(path))
+					{
+						var lines = File.ReadAllLines(path, WordTranslate.encoding).OrderBy(s => s).Select(s => s.ToUpper()).ToArray();
+						Content.AddRange(lines);
+					}//if
         }//func
 
         public void AddRange(IEnumerable<string> ss)
@@ -36,11 +44,11 @@ namespace WordKnown
 
         public void Save()
         {
-   			string[] ss = Content
+					string[] ss = Content
                 .Select(s => s.ToUpper())
-				.OrderBy(s => s)
-				.ToArray();
-			File.WriteAllLines(Path, ss);
+								.OrderBy(s => s)
+								.ToArray();
+					File.WriteAllLines(path, ss);
         }//func
 
         public bool Move(string s)

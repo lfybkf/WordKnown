@@ -58,7 +58,7 @@ namespace WordKnown
 			for (int i = 0; i < lstMain.Items.Count; i++ )
 			{
 				wt = (WordTranslate)lstMain.Items[i];
-				if (wt.HasTranslate())
+				if (wt.HasTranslate)
 					continue;
 
 				if (iSelected >= SelectLim)

@@ -3,58 +3,20 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using BDB;
+using Clipboard = System.Windows.Forms.Clipboard;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace WordKnown
 {
-	class WordTranslate
-	{
-		static string fmt = "{0} - {1}";
-		static string[] dlm = new string[] {" - "};
-		public string Word { get; set; }
-		public string Translate { get; set; }
 
-		public WordTranslate()
-		{
-			Translate = string.Empty;
-		}//ctor
-
-		public override string ToString()
-		{
-			if (HasTranslate())
-				return string.Format(fmt, Word, Translate);
-			else
-				return Word;
-		}//func
-
-		public bool BadTranslate()
-		{
-			return (Word == Translate);
-		}//func
-
-		public bool HasTranslate()
-		{
-			return (Translate != string.Empty);
-		}//func
-
-		public bool Parse(string input)
-		{
-			string[] ss = input.Split(dlm, StringSplitOptions.RemoveEmptyEntries);
-			if (ss.Length != 2)
-				return false;
-
-			Word = ss[0];
-			Translate = ss[1];
-			return true;
-		}//func
-
-	}//class
 
 	class Glossary
 	{
 		#region static
 		static OrderedStrings oKnown = new OrderedStrings(Path.Combine(Environment.CurrentDirectory, "Known.ini"));
 		static OrderedStrings oCrap = new OrderedStrings(Path.Combine(Environment.CurrentDirectory, "Crap.ini"));
+		static OrderedStrings oTrn = new OrderedStrings(Path.Combine(Environment.CurrentDirectory, "Trn.ini"));
 		static char[] ccDelim =	"\\\" ,.!?<>-=:;/|[]{}()~@#$%^&*_—".ToCharArray();
 		static char[] ccForbid = "+0123456789\'".ToCharArray();
 		static char[] ccEng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
@@ -65,17 +27,20 @@ namespace WordKnown
 		List<WordTranslate> lstUnk = new List<WordTranslate>();
 		public Func<IEnumerable<WordTranslate>> Selected;
 
-		internal ListBox ctl;
+		internal System.Windows.Forms.ListBox ctl;
+
+		public static bool IsEng(string s) { return s.All(ch => ccEng.Contains(ch)); }//func
 
 		public Glossary()
 		{
 			oKnown.Load();
 			oCrap.Load();
+			oTrn.Load();
 		}//ctor
 
-		public void LoadUnk(string path)
+		public void LoadUnknownFromTrn(string path)
 		{
-			string[] ss = File.ReadAllLines(path, Encoding.GetEncoding(1251));
+			string[] ss = File.ReadAllLines(path, WordTranslate.encoding);
 			WordTranslate item;
 			foreach (string s in ss)
 			{
@@ -94,6 +59,7 @@ namespace WordKnown
 			fileText = path;
 			List<string> Content = new List<string>();
 			string[] SingleContent;
+			//работаем с целым каталогом файлов
 			if (Directory.Exists(path))
 			{
 				foreach (var path1 in Directory.EnumerateFiles(path))
@@ -105,14 +71,15 @@ namespace WordKnown
 					Content.AddRange(SingleContent);
 				}//for
 			}//if
-			else
+			else //работаем с одним файлом
 			{
-				if (path.EndsWith(".trn"))
+				if (path.EndsWith(".trn")) // возобновляем работу с прошлым файлом
 				{
-					LoadUnk(path);
+					LoadUnknownFromTrn(path);
 					return;
 				}//if
 
+				//базовый сценарий
 				SingleContent = File.ReadAllLines(path);
 				Content.AddRange(SingleContent);
 			}//else
@@ -140,10 +107,23 @@ namespace WordKnown
 				}//if
 			}//for
 
+			//заполняем перевод из старых трн
+			IEnumerable<WordTranslate> wtsTrn = oTrn.sequenceAll
+				.Select(s => { var wt = new WordTranslate(); return wt.Parse(s) ? wt : null; })
+				.Where(wt => wt != null)
+				.ToArray();
+
+			WordTranslate wtTrn;
+			foreach (WordTranslate wt in lstUnk)
+			{
+				wtTrn = wtsTrn.FirstOrDefault(o => o.Word == wt.Word);
+				if (wtTrn != null) { wt.Translate = wtTrn.Translate; }
+			}//for
+
 			Refresh();
 		}//func
 
-        public void Copy()
+		public void Copy()
 		{
 			string dlm= "#";
 			string sClip = string.Join(dlm, Selected().Select(wt=>wt.Word).ToArray());
@@ -185,7 +165,7 @@ namespace WordKnown
             for (int i = 0; i < iW; i++)
             {
                 WordTranslate wt = Selected().ElementAt(i);
-                if (wt.BadTranslate())
+                if (wt.BadTranslate)
                     lstUnk.Remove(wt);
             }//for
 
@@ -221,7 +201,7 @@ namespace WordKnown
 			File.WriteAllLines(
 				Path.ChangeExtension(fileText, "trn")
 				, qry.ToArray()
-				, Encoding.GetEncoding(1251)
+				, WordTranslate.encoding
 				);
 		}//func
 
@@ -239,41 +219,37 @@ namespace WordKnown
 				ctl.SelectedIndex = 0;
 		}//func
 
-		public void SetKnown(IEnumerable<WordTranslate> wts)
+		public void SetKnown(IEnumerable<WordTranslate> wtS)
 		{
-            //есть ли новые известные
-            if (wts.Any() == false)
-                return;
+				//есть ли новые известные
+			if (wtS.Any() == false) { return; }
             
-            //пополнить список известных
-            oKnown.AddRange(wts.Select(wt => wt.Word));
-
-            //удалить из списка неизвестных
-            foreach (var wt in wts)
-            {
-                lstUnk.Remove(wt);
-            }//for
-		}//func
-
-		public void SetCrap(IEnumerable<WordTranslate> wts)
-		{
-			//есть ли новые известные
-			if (wts.Any() == false)
-				return;
-
 			//пополнить список известных
-			oCrap.AddRange(wts.Select(wt => wt.Word));
+			oKnown.AddRange(wtS.Select(wt => wt.Word));
 
 			//удалить из списка неизвестных
-			foreach (var wt in wts)
+			foreach (var wt in wtS)
 			{
 				lstUnk.Remove(wt);
 			}//for
 		}//func
 
-        public static bool IsEng(string s)
-        {
-            return s.All(ch => ccEng.Contains(ch));
-        }//func
+		public void SetCrap(IEnumerable<WordTranslate> wtS)
+		{
+			//есть ли новые известные
+			if (wtS.Any() == false)
+				return;
+
+			//пополнить список известных
+			oCrap.AddRange(wtS.Select(wt => wt.Word));
+
+			//удалить из списка неизвестных
+			foreach (var wt in wtS)
+			{
+				lstUnk.Remove(wt);
+			}//for
+		}//func
+
+
 	}//class
 }//ns
