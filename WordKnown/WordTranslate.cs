@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BDB;
 
 namespace WordKnown
 {
 	class WordTranslate
 	{
 		public const string D = " - ";
-		public static readonly Encoding encoding = Encoding.GetEncoding(1251);
-		static string fmt = "{0} - {1}";
 		static string[] dlm = new string[] {D};
+		public static readonly Encoding encoding = Encoding.GetEncoding(1251);
 
 		public string Word { get; set; }
 		public string Translate { get; set; }
@@ -22,16 +22,8 @@ namespace WordKnown
 			Translate = string.Empty;
 		}//ctor
 
-		public override string ToString()
-		{
-			if (HasTranslate)
-				return string.Format(fmt, Word, Translate);
-			else
-				return Word;
-		}//func
-
+		public override string ToString()	{	return HasTranslate ? "{0} - {1}".fmt(Word, Translate) : Word; 	}
 		public bool BadTranslate { get { return (Word == Translate); } }
-
 		public bool HasTranslate { get { return (Translate != string.Empty); } }
 
 		public bool Parse(string input)
