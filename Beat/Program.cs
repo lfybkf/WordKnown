@@ -11,7 +11,7 @@ namespace Beat
 		static void Main(string[] args)
 		{
 			Encoding enc = Encoding.GetEncoding(1251);
-			int Lim = 150, NumOfFiles = 0, Index = 0;
+			int Lim = 30, NumOfFiles = 0, Index = 0;
 			string path = args[0];
 			string fileFmt = Path.GetFileNameWithoutExtension(path) + "_{0:D3}.trn";
 			string[] Content = File.ReadAllLines(path, enc);
